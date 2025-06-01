@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { Tabs, TabsList, TabsTrigger } from '';
-import { Input } from '@';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -55,11 +55,28 @@ interface Metrics {
   following: number;
 }
 
+// Add after your existing interfaces
+interface InstagramAnalytics {
+  engagementRate: number;
+  postFrequency: number;
+  accountAge: string;
+  accountHealth: 'Good' | 'Average' | 'Needs Improvement';
+}
+
+interface TikTokAnalytics {
+  heartRate: number;
+  videoFrequency: number;
+  averageViews: number;
+  accountVerification: string;
+  performanceScore: 'Viral' | 'Growing' | 'Stable' | 'Needs Work';
+}
+
 export default function AdminDashboardPage() {
   const [env, setEnv] = useState<'instagram' | 'tiktok'>('instagram');
   const [userId, setUserId] = useState('');
   const [userData, setUserData] = useState<InstagramUserData | TikTokUserData | null>(null);
   const [metrics, setMetrics] = useState<Metrics | null>(null);
+  const [analysisData, setAnalysisDatas] = useState<InstagramAnalytics | TikTokAnalytics | null>(null);
 
   const handleSearch = () => {
     if (env === 'instagram') {
@@ -176,6 +193,8 @@ export default function AdminDashboardPage() {
             </div>
           </CardContent>
         </Card>
+      
+        
       );
     } else {
       // TikTok user
@@ -238,7 +257,7 @@ export default function AdminDashboardPage() {
           <CardTitle>User Information Lookup</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Tabs defaultValue="instagram" onValueChange={setEnv} className="w-full">
+          <Tabs  defaultValue="instagram" onValueChange={(value: 'instagram' | 'tiktok') => setEnv(value)} className="w-full">
             <TabsList>
               <TabsTrigger value="instagram">Instagram</TabsTrigger>
               <TabsTrigger value="tiktok">TikTok</TabsTrigger>
@@ -289,6 +308,7 @@ export default function AdminDashboardPage() {
           </CardContent>
         </Card>
       )}
+      {}
     </div>
   );
 }
